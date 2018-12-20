@@ -1,0 +1,53 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SIC43NT Demonstration";
+}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+
+<h1>SIC43NT Demonstration</h1>
+<table style="width:75%">
+    <tr>
+        <th>UID[7]</th>
+        <td colspan="3">@Model.uid</td>
+    </tr>
+    <tr>
+        <th>Default Key</th>
+        <td colspan="3">@Model.default_key</td>
+    </tr>
+    <tr>
+        <td> - </td>
+        <td> From Tag </td>
+        <td> From Server</td>
+        <td> Result</td>
+    </tr>
+    <tr>
+        <th>Tamper Flag(HEX)</th>
+        <td>@Model.flagTamperTag</td>
+        <td>@Model.flagTamperServer</td>
+        <td>@Model.flagTamperDecision</td>
+    </tr>
+    <tr>
+        <th>Time Stamp(DEC)</th>
+        <td>@Model.timeStampTag_uint</td>
+        <td>@Model.timeStampServer_str</td>
+        <td>@Model.timeStampDecision</td>
+    </tr>
+    <tr>
+        <th>Rolling code(HEX)</th>
+        <td>@Model.rollingCodeServer</td>
+        <td>@Model.rollingCodeServer</td>
+        <td>@Model.rollingCodeDecision</td>
+    </tr>
+</table>
