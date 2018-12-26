@@ -62,6 +62,32 @@ Use SIC43NT Writer App on Android NFC Phone to customize SIC43NT Tag as the expl
 
 After completely customize SIC43NT Tag with the setting above, each time you tap the SIC43NT tag to NFC Phone (iPhone, Android or any NDEF support device), the web page will display a table of Tamper Flag, Time Stamp value and Rolling Code value which keep changing. Especially for the rolling code value, it will be a match between "From Tag" and "From Server" column. This mean that server-side applicationm (which calculate rolling code based on same Rolling Code Key) can check the authenicity of SIC43NT Tag.
 
+## Usage
+To develop your own SIC43NT Web service, you can pick class **KeyStream** [KeyStream.cs](https://github.com/SiliconCraft/sic43nt-server-aspnetcore/blob/master/SIC43NT_Webserver/Utilities/KeyStream/KeyStream.cs) and class **Encrypt** [Encrypt.cs](https://github.com/SiliconCraft/sic43nt-server-aspnetcore/blob/master/SIC43NT_Webserver/Utilities/KeyStream/Encrypt.cs) to your own ASP.net project. These classes are utility for rolling code calculation. 
+
+The method *stream* of KeyStream calculate rolling code. It requires *80 bits-Key* (input as a 20-characters hexadecimal string) and *32 bits Time Stamp* or *32 bits iv* (input as a 8-characters hexadecimal string).
+
+The class which calling this method is **IndexModel** in [Index.cshtml.cs](https://github.com/SiliconCraft/sic43nt-server-aspnetcore/blob/master/SIC43NT_Webserver/Pages/Index.cshtml.cs) which is an example showing how to use it. The main content of  **IndexModel** relating to rolling code calculation is shown below.
+
+
+```C#
+public void OnGet(string d)
+{
+    //...
+    uid = d.Substring(0, 14);
+    flagTamperTag = d.Substring(14, 2);
+    timeStampTag_str = d.Substring(16, 8);
+    timeStampTag_uint = UInt32.Parse(timeStampTag_str, System.Globalization.NumberStyles.HexNumber);
+    rollingCodeTag = d.Substring(24, 8);
+    default_key = "FFFFFF" + uid;
+    rollingCodeServer = KeyStream.stream(default_key, timeStampTag_str, 4);
+    //...
+    // Criteria to check authenicity of SIC43NT Tag.
+    // Compare *rollingCodeServer* against *rollingCodeTag*
+    // Confirm *timeStampTag_uint* of this UID is increasing ( more than previous value of timeStampTag_uint for this UID ).
+}
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
