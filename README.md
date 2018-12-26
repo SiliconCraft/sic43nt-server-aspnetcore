@@ -12,11 +12,11 @@ their tags as well as communicate to them regarding to the tag status.
 * SIC43NT Tag
 * Android NFC Phone with [SIC43NT Writer](https://play.google.com/store/apps/details?id=com.sic.app.sic43nt.writer) App
 * [Microsoft Azure Account](https://azure.microsoft.com/) 
-* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure) from [Azure Cloud Shell](https://docs.microsoft.com/en-us/azure/cloud-shell/overview) in Azure Portal or locally [install](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on your macOS, Linux or Window machine.
+* [Azure Command Line / Azure CLI](https://docs.microsoft.com/en-us/cli/azure) from [Azure Cloud Shell](https://docs.microsoft.com/en-us/azure/cloud-shell/overview) in Azure Portal or locally [install](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on your macOS, Linux or Window machine.
 
-#### Step 1 : Create a resource group & App service Plan
+#### Step 1 : Create a resource group
 
-Create a new resource group to contain this new sample web app by using Azure Cloud-Shell command line.
+Create a new resource group to contain this new sample web app by using Azure command line.
 The following example creates a new resource group with name "sic43nt-sample-rg" and the location is in "West Europe". 
 
 ```
@@ -24,24 +24,21 @@ az group create --name sic43nt-sample-rg --location "West Europe"
 ```
 
 #### Step 2 : Create a new Free App Service Plan
-Create a new Free App Service Plan by using Azure Cloud-Shell command line.
-The following example creates a new Free App service plan with name "sic43nt_samplePlan" in resource group "sic43nt-sample-rg".
+Create a new Free App Service Plan by using Azure command line. The following example creates a new Free App service plan with name "sic43nt_samplePlan" in resource group "sic43nt-sample-rg".
 
 ```
 az appservice plan create --name sic43nt_samplePlan --resource-group sic43nt-sample-rg --sku FREE
 ```
 
 #### Step 3 : Create a Web App 
-Create a new Web App by using Azure Cloud-Shell command line.
-The following example creates a new Web App. Please replace '<app_name>' with a globally unique app name (valid characters are 'a-z', '0-9', and '-'). 
+Create a new Web App by using Azure command line. The following example creates a new Web App. Please replace '<app_name>' with a globally unique app name (valid characters are 'a-z', '0-9', and '-'). 
 
 ```
 az webapp create --resource-group sic43nt-sample-rg --plan sic43nt_samplePlan --name <app_name>
 ```
 
 #### Step 4 : Deploy the sample app using Git
-Deploy source code from GitHub to Azure Web App using Azure Cloud-Shell command line.
-The following example deploy source code from https://github.com/SiliconCraft/sic43nt-server-aspnetcore.git in master branch to a Web App name '<app_name>' in resource group "sic43nt-sample-rg".
+Deploy source code from GitHub to Azure Web App using Azure command line. The following example deploy source code from https://github.com/SiliconCraft/sic43nt-server-aspnetcore.git in master branch to a Web App name '<app_name>' in resource group "sic43nt-sample-rg".
 ```
 az webapp deployment source config --repo-url https://github.com/SiliconCraft/sic43nt-server-aspnetcore.git --branch master  --name <app_name> --resource-group sic43nt-sample-rg
 ```
