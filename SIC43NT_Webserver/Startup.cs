@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SIC43NT_Webserver.TableStorage;
 
 namespace SIC43NT_Webserver
 {
@@ -32,6 +33,8 @@ namespace SIC43NT_Webserver
             });
 
 
+            services.AddSingleton(typeof(IAzureTableStorage), typeof(AzureTableStorage));
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
