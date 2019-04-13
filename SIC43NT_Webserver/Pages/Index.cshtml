@@ -14,6 +14,21 @@
         padding: 5px;
         text-align: left;
     }
+
+    #notavaliable_result {
+
+    }
+
+    #incorrect_result {
+        background-color: darkred;
+        color: white;
+    }
+
+    #correct_result {
+        background-color: green;
+        color: white;
+    }
+
 </style>
 
 <h1>SIC43NT Demonstration</h1>
@@ -36,18 +51,18 @@
         <th>Tamper Flag(HEX)</th>
         <td>@Model.flagTamperTag</td>
         <td>@Model.flagTamperServer</td>
-        <td>@Model.flagTamperDecision</td>
+        <td id="@Model.flagTamper_result_color">@Model.flagTamperDecision</td>
     </tr>
     <tr>
         <th>Time Stamp(DEC)</th>
         <td>@Model.timeStampTag_str</td>
         <td>@Model.timeStampServer_str</td>
-        <td>@Model.timeStampDecision</td>
+        <td id="@Model.timeStamp_result_color">@Model.timeStampDecision</td>
     </tr>
     <tr>
         <th>Rolling code(HEX)</th>
         <td>@Model.rollingCodeTag</td>
         <td>@Model.rollingCodeServer</td>
-        <td>@Model.rollingCodeDecision</td>
+        <td id="@Model.rollingCode_result_color">@Model.rollingCodeDecision</td>
     </tr>
 </table>
