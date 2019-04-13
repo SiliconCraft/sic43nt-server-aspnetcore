@@ -63,16 +63,24 @@ namespace SIC43NT_Webserver.Pages
                     timeStampTag_str = d.Substring(16, 8);
                     timeStampTag_uint = UInt32.Parse(timeStampTag_str, System.Globalization.NumberStyles.HexNumber);
                     rollingCodeTag = d.Substring(24, 8);
-                    
-                    // Retrive content from table server from existing UID
-                    tagAr = _serv.GetTagAccessRec("DemoSection", uid);
-                    default_key = tagAr.SecretKey;
-                    rollingCodeServer = KeyStream.stream(default_key, timeStampTag_str, 4);
-                    timeStampServer_uint = (uint)tagAr.TimeStampServer;
-                    timeStampServer_str = timeStampServer_uint.ToString("X8");
 
-                    // Check the consistance of data from query string and table server 
-                    result_agreement_check(tagAr);
+                    // Retrive content from table server from existing UID
+                    try
+                    {
+                        tagAr = _serv.GetTagAccessRec("DemoSection", uid);
+                        default_key = tagAr.SecretKey;
+                        rollingCodeServer = KeyStream.stream(default_key, timeStampTag_str, 4);
+                        timeStampServer_uint = (uint)tagAr.TimeStampServer;
+                        timeStampServer_str = timeStampServer_uint.ToString("X8");
+
+                        // Check the consistance of data from query string and table server 
+                        result_agreement_check(tagAr);
+                    }
+                    catch
+                    {
+                        // Cannot find UID
+                    }
+
                 }
             }
         }
