@@ -14,8 +14,8 @@ namespace SIC43NT_Webserver.TableStorage
 
         }
 
-        public String TableSection { get; set; }
-        public String UID { get; set; }
+        //public String TableSection { get; set; } -> Use as PartitionKey
+        //public String UID { get; set; } -> Use as RowKey
         public String SecretKey { get; set; }
         public String RollingCodeServer { get; set; }
         public Int32 TimeStampServer { get; set; }
