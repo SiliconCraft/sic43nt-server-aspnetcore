@@ -31,6 +31,9 @@ namespace SIC43NT_Webserver.Pages
         public string timeStampDecision = "N/A";
         public string flagTamperDecision = "N/A";
         public string rollingCodeDecision = "N/A";
+
+        public string MessageReport = "";
+
         public TagAccessRec tagAr;
         private IAzureTableStorage _serv;
 
@@ -41,9 +44,14 @@ namespace SIC43NT_Webserver.Pages
 
         public void OnGet(string d)
         {
-            if (d is null)
+            if (_serv.ConnectionReady() == false)
             {
+                MessageReport = "Cannot Connect to Azure Table Storage";
+            }
 
+            if ((d is null) || (_serv.ConnectionReady() == false)) 
+            {
+                
             }
             else
             {

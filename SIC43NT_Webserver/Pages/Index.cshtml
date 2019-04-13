@@ -16,7 +16,6 @@
     }
 
     #notavaliable_result {
-
     }
 
     #incorrect_result {
@@ -28,10 +27,13 @@
         background-color: green;
         color: white;
     }
-
 </style>
 
 <h1>SIC43NT Demonstration</h1>
+@if (@Model.MessageReport != "")
+{
+<h2>@Model.MessageReport</h2>
+}
 <table style="width:75%">
     <tr>
         <th>UID[7]</th>

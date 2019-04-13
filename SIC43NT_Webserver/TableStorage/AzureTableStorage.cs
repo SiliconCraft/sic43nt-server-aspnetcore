@@ -12,6 +12,7 @@ namespace SIC43NT_Webserver.TableStorage
         //void CreateBook(EmployeeInfoRecord bk);
         TagAccessRec GetTagAccessRec(string pKey, string rKey);
         bool UpdateTagAccessRec(TagAccessRec tar);
+        bool ConnectionReady();
     }
 
     public class AzureTableStorage : IAzureTableStorage
@@ -20,6 +21,7 @@ namespace SIC43NT_Webserver.TableStorage
         private CloudTableClient tableClient;
         private IConfiguration configs;
         private CloudTable tableSIC43NT;
+        private bool connection_ready = false;
 
         public AzureTableStorage(IConfiguration c)
         {
@@ -32,7 +34,16 @@ namespace SIC43NT_Webserver.TableStorage
                     storageAccount = CloudStorageAccount.Parse(connStr);
                     tableClient = storageAccount.CreateCloudTableClient();
                     CloudTable table = tableClient.GetTableReference("TableSIC43NT");
-                    table.CreateIfNotExists();
+                    try
+                    {
+                        table.CreateIfNotExists();
+                        connection_ready = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        connection_ready = false;
+                    }
+
                 }
                 else
                 {
@@ -45,6 +56,11 @@ namespace SIC43NT_Webserver.TableStorage
             }
         }
         
+        public bool ConnectionReady()
+        {
+            return connection_ready;
+        }
+
         // Read Tag record from Azure Table
         public TagAccessRec GetTagAccessRec(string pKey, string rKey)
         {
