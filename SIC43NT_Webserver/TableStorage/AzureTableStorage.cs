@@ -36,8 +36,13 @@ namespace SIC43NT_Webserver.TableStorage
                     CloudTable table = tableClient.GetTableReference("TableSIC43NT");
                     try
                     {
-                        table.CreateIfNotExists();
+                        bool tbl_created = table.CreateIfNotExists();
+                        if (tbl_created == true)
+                        {
+                            initial_TagAccessRec();
+                        }
                         connection_ready = true;
+                        
                     }
                     catch (Exception ex)
                     {
@@ -56,9 +61,47 @@ namespace SIC43NT_Webserver.TableStorage
             }
         }
         
+        private void initial_TagAccessRec()
+        {
+            // Insert first record random value.
+            Random rand = new Random();
+            byte[] rand_bytes = new byte[4];
+            rand.NextBytes(rand_bytes);
+
+            TagAccessRec tar = new TagAccessRec();
+            tar.PartitionKey = "DemoSection";
+            tar.RowKey = "39493_" +
+                        rand_bytes[0].ToString("X2") +
+                        rand_bytes[1].ToString("X2") +
+                        rand_bytes[2].ToString("X2") +
+                        rand_bytes[3].ToString("X2");
+            tar.RollingCodeFailCount = 0;
+            tar.TimeStampFailCount = 0;
+            tar.SuccessCount = 0;
+            tar.RollingCodeFailLastDateTime = DateTime.Now;
+            tar.TimeStampFailLastDateTime = DateTime.Now;
+            tar.SuccessLastDateTime = DateTime.Now;
+            tar.SecretKey = "FFFFFF39493000000000";
+            tar.TimeStampServer = 0;
+            tar.RollingCodeServer = "0";
+            InsertTagAccessRec(tar);
+        }
+
         public bool ConnectionReady()
         {
             return connection_ready;
+        }
+
+        // Read Tag record from Azure Table
+        public bool InsertTagAccessRec(TagAccessRec tar)
+        {
+            tableSIC43NT = tableClient.GetTableReference("TableSIC43NT");
+            TableOperation insertOrMergeOperation = TableOperation.InsertOrMerge(tar);
+
+            // Execute the operation.
+            TableResult result = tableSIC43NT.Execute(insertOrMergeOperation);
+            TagAccessRec insertedCustomer = result.Result as TagAccessRec;
+            return true;
         }
 
         // Read Tag record from Azure Table
