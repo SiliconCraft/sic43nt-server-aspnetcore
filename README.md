@@ -2,6 +2,13 @@
 
 This project provides an example ASP.NET Core project for SIC43NT rolling code authentication web application. SIC43NT tag provider can apply this concept to allow SIC43NT tag holders to verify their tags as well as communicate to them regarding to the tag status.
 
+Table of Content
+[Basic Concept of SIC43NT](#Basic-Concept-of-SIC43NT)
+[Getting Started](#Getting-Started)
+* [Installing on Microsoft Azure Web App](#Installing-on-Microsoft-Azure-Web-App)  
+* [Installing on Google Cloud Platform](#Installing-on-Google-Cloud-Platform)
+[Usage](## Usage)
+
 ## Basic Concept of SIC43NT 
 
 SIC43NT Tag provide 4 disticnt NDEF contents coded in Hexadecimal string which can be pass to web service directly. The contents including
