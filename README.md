@@ -7,7 +7,7 @@ Table of Content
 * [Getting Started](#Getting-Started)
   * [Installing on Microsoft Azure Web App](#Installing-on-Microsoft-Azure-Web-App)  
   * [Installing on Google Cloud Platform](#Installing-on-Google-Cloud-Platform)
-*[Usage](##Usage)
+* [Usage](##Usage)
 
 ## Basic Concept of SIC43NT 
 
@@ -18,7 +18,6 @@ SIC43NT Tag provide 4 disticnt NDEF contents coded in Hexadecimal string which c
 1. **Rolling Code:** 4-bytes of stream cipher ([Mickey V1](http://www.ecrypt.eu.org/stream/ciphers/mickey/mickey.pdf)) with input from Time-stamp value as IV.
 
 ## Getting Started
-[1) Installing on Microsoft Azure Web App](#Installing-on-Microsoft-Azure-Web-App )  
 
 ### Installing on Microsoft Azure Web App 
 
