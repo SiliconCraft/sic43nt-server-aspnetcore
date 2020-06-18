@@ -1,9 +1,17 @@
 # SIC43NT Tag authenticity verification using rolling code
 
-This project provides an example ASP.NET Core project for SIC43NT rolling code authentication web application. SIC43NT tag provider can apply this concept to allow SIC43NT tag holders to verify 
-their tags as well as communicate to them regarding to the tag status.
+This project provides an example ASP.NET Core project for SIC43NT rolling code authentication web application. SIC43NT tag provider can apply this concept to allow SIC43NT tag holders to verify their tags as well as communicate to them regarding to the tag status.
+
+## Basic Concept of SIC43NT 
+
+SIC43NT Tag provide 4 disticnt NDEF contents coded in Hexadecimal string which can be pass to web service directly. The contents including
+1. **UID** or **Unique ID** **:** 7-bytes UID of this Tag (i.e. "39493000012345")
+1. **Tamper Flag:** 1-byte content reflect status of tamper pin. If tamper pin is connected to the GND, the result is "00". Otherwise Tamper Flag will be "AA" by factory setting value. 
+1. **Time-Stamp:** 4-bytes randomly increasing value (each step of increasing is 1 to 255). This content always increasing each time the tag has been read.
+1. **Rolling Code:** 4-bytes of stream cipher ([Mickey V1](http://www.ecrypt.eu.org/stream/ciphers/mickey/mickey.pdf)) with input from Time-stamp value as IV.
 
 ## Getting Started
+[1) Installing on Microsoft Azure Web App](#Installing-on-Microsoft-Azure-Web-App )  
 
 ### Installing on Microsoft Azure Web App 
 
@@ -61,14 +69,6 @@ Use SIC43NT Writer App on Android NFC Phone to customize SIC43NT Tag as the expl
     * **Rolling Code:** Checked
 
 After completely customize SIC43NT Tag with the setting above, each time you tap the SIC43NT tag to NFC Phone (iPhone, Android or any NDEF support device), the web page will display a table of Tamper Flag, Time Stamp value and Rolling Code value which keep changing. Especially for the rolling code value, it will be a match between "From Tag" and "From Server" column. This mean that server-side applicationm (which calculate rolling code based on same Rolling Code Key) can check the authenicity of SIC43NT Tag.
-
-## Basic Concept of SIC43NT 
-
-SIC43NT Tag provide 4 disticnt NDEF contents coded in Hexadecimal string which can be pass to web service directly. The contents including
-1. **UID** or **Unique ID** **:** 7-bytes UID of this Tag (i.e. "39493000012345")
-1. **Tamper Flag:** 1-byte content reflect status of tamper pin. If tamper pin is connected to the GND, the result is "00". Otherwise Tamper Flag will be "AA" by factory setting value. 
-1. **Time-Stamp:** 4-bytes randomly increasing value (each step of increasing is 1 to 255). This content always increasing each time the tag has been read.
-1. **Rolling Code:** 4-bytes of stream cipher ([Mickey V1](http://www.ecrypt.eu.org/stream/ciphers/mickey/mickey.pdf)) with input from Time-stamp value as IV.
 
 ## Usage
 
