@@ -22,6 +22,7 @@ namespace SIC43NT_Webserver.Pages
         public uint timeStampServer_uint;
         public string timeStampServer_str = "N/A";
         public string rollingCodeServer = "N/A";
+        public string rlc = "";
 
         public string timeStampDecision = "N/A";
         public string flagTamperDecision = "N/A";
@@ -52,7 +53,7 @@ namespace SIC43NT_Webserver.Pages
         {
             /*---- Time Stamp Counting Decision ----*/
             if (timeStampServer_str == "N/A")
-            { 
+            {
                 timeStampDecision = "N/A";
             }
             else
@@ -68,13 +69,30 @@ namespace SIC43NT_Webserver.Pages
             }
 
             /*---- Rolling Code Counting Decision ----*/
-            if (rollingCodeServer == rollingCodeTag) 
+            if (rollingCodeServer == rollingCodeTag)
             {
                 rollingCodeDecision = "Correct";
             }
             else
             {
-                rollingCodeDecision = "Incorrect";
+                if (flagTamperTag == "AA")
+                {
+                    rlc = KeyStream.stream(default_key, timeStampTag_str, 12);
+                    rollingCodeServer = rlc.Substring(16, 8);
+
+                    if (rollingCodeServer == rollingCodeTag)
+                    {
+                        rollingCodeDecision = "Correct";
+                    }
+                    else
+                    {
+                        rollingCodeDecision = "Incorrect";
+                    }
+                }
+                else
+                {
+                    rollingCodeDecision = "Incorrect";
+                }
             }
         }
     }
