@@ -77,6 +77,7 @@ namespace SIC43NT_Webserver.Pages
             {
                 if (flagTamperTag == "AA")
                 {
+                    /* for tags that can setting secure tamper */
                     rlc = KeyStream.stream(default_key, timeStampTag_str, 12);
                     rollingCodeServer = rlc.Substring(16, 8);
 
