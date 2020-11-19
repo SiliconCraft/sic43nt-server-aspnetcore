@@ -10,18 +10,19 @@ namespace SIC43NT_Webserver.Pages
 {
     public class IndexModel : PageModel
     {
-        public string default_key;
-        public string uid;
+        public string default_key = "N/A";
+        public string uid = "N/A";
 
-        public string flagTamperTag;
-        public uint timeStampTag_uint;
-        public string timeStampTag_str;
-        public string rollingCodeTag;
+        public string flagTamperTag = "-";
+        public string timeStampTag_uint = "-";
+        public string timeStampTag_str = "N/A";
+        public string rollingCodeTag = "-";
 
         public string flagTamperServer = "N/A";
         public uint timeStampServer_uint;
         public string timeStampServer_str = "N/A";
         public string rollingCodeServer = "N/A";
+        public string rlc = "";
 
         public string timeStampDecision = "N/A";
         public string flagTamperDecision = "N/A";
@@ -40,7 +41,7 @@ namespace SIC43NT_Webserver.Pages
                     uid = d.Substring(0, 14);
                     flagTamperTag = d.Substring(14, 2);
                     timeStampTag_str = d.Substring(16, 8);
-                    timeStampTag_uint = UInt32.Parse(timeStampTag_str, System.Globalization.NumberStyles.HexNumber);
+                    timeStampTag_uint = UInt32.Parse(timeStampTag_str, System.Globalization.NumberStyles.HexNumber).ToString();
                     rollingCodeTag = d.Substring(24, 8);
                     default_key = "FFFFFF" + uid;
                     rollingCodeServer = KeyStream.stream(default_key, timeStampTag_str, 4);
@@ -52,12 +53,12 @@ namespace SIC43NT_Webserver.Pages
         {
             /*---- Time Stamp Counting Decision ----*/
             if (timeStampServer_str == "N/A")
-            { 
+            {
                 timeStampDecision = "N/A";
             }
             else
             {
-                if (timeStampServer_uint < timeStampTag_uint)
+                if (timeStampServer_uint < UInt32.Parse(timeStampTag_uint))
                 {
                     timeStampDecision = "Rolling code updated";
                 }
@@ -68,13 +69,31 @@ namespace SIC43NT_Webserver.Pages
             }
 
             /*---- Rolling Code Counting Decision ----*/
-            if (rollingCodeServer == rollingCodeTag) 
+            if (rollingCodeServer == rollingCodeTag)
             {
                 rollingCodeDecision = "Correct";
             }
             else
             {
-                rollingCodeDecision = "Incorrect";
+                if (flagTamperTag == "AA")
+                {
+                    /* for tags that can setting secure tamper */
+                    rlc = KeyStream.stream(default_key, timeStampTag_str, 12);
+                    rollingCodeServer = rlc.Substring(16, 8);
+
+                    if (rollingCodeServer == rollingCodeTag)
+                    {
+                        rollingCodeDecision = "Correct";
+                    }
+                    else
+                    {
+                        rollingCodeDecision = "Incorrect";
+                    }
+                }
+                else
+                {
+                    rollingCodeDecision = "Incorrect";
+                }
             }
         }
     }
