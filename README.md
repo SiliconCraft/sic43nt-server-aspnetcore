@@ -24,7 +24,9 @@ SIC43NT Tag provide 4 distinct NDEF contents coded in Hexadecimal string which c
 #### Prerequisites
 
 * SIC43NT Tag
-* Android NFC Phone with [SIC43NT Writer](https://play.google.com/store/apps/details?id=com.sic.app.sic43nt.writer) App
+* Mobile Application for Encoding Data to SIC43NT
+   * [SIC Tag encoder](https://play.google.com/store/apps/details?id=th.co.sic.nfc_tag_encoder) App on Google Play
+   * [SIC Tag encoder](https://apps.apple.com/th/app/nfc-tag-encoder/id6740401948) App on Apple Store 
 * [Microsoft Azure Account](https://azure.microsoft.com/) 
 * [Azure Command Line / Azure CLI](https://docs.microsoft.com/en-us/cli/azure) from [Azure Cloud Shell](https://docs.microsoft.com/en-us/azure/cloud-shell/overview) in Azure Portal or locally [install](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on your macOS, Linux or Window machine.
 
